@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:shelf/shelf.dart';
@@ -8,8 +7,6 @@ import 'package:shelf_router/shelf_router.dart';
 import 'Const/const_Msg.dart';
 import 'Const/const_Variable.dart';
 import 'routersApi/BaseApi.dart';
-
-
 
 /*
 https://api-auth-first-test.herokuapp.com/ 
@@ -25,9 +22,9 @@ main() async {
       orElse: (() => MapEntry("PORT", "8080")));
 
   final Router router = Router();
-  router.mount("/api_v1/", ApiBase().router);
+  router.mount("/api_v1", ApiBase().router);
   Handler handler = Pipeline().addMiddleware(logRequests()).addHandler(router);
-  router.get("/", (Request req) {
+  router.all("/", (Request req) {
     return Response.ok("api is running");
   });
   router.all("/<name|.*>", (Request req) {

@@ -65,7 +65,14 @@ class AuthAPi {
         return Msg.badRequest(msg: {"msg": "token authorization is requird"});
       }
     });
-
+    router.all("/<name|.*>", (Request req) {
+      return Response.notFound(
+          json.encode({
+            "msg": "Wrong! path is not currect < ${req.url} >",
+            "code": "404"
+          }),
+          headers: {"Content-Type": "application/json"});
+    });
     return router;
   }
 }

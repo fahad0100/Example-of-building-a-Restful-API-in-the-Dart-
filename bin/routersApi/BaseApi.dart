@@ -14,7 +14,7 @@ class ApiBase {
     Handler _handler =
         Pipeline().addMiddleware(logRequests()).addHandler(router);
 
-    router.get("/", (Request req) {
+    router.all("/", (Request req) {
       return Response.ok("ApiBase");
     });
     //-------here for if user enter wrong path
