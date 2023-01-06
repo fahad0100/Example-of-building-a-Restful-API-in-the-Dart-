@@ -4,7 +4,7 @@ import 'dart:ffi';
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
 
-import 'authRouter.dart';
+import 'Auth/authRouter.dart';
 
 class ApiBase {
   Handler get router {
