@@ -18,13 +18,16 @@ class AuthAPi {
             param.containsKey("password") &&
             param.containsKey("name")) {
           var dataUser = await FirebaseMethod.createAccount(
-              email: param["email"], pass: param["password"],name: param["name"]);
+              email: param["email"],
+              pass: param["password"],
+              name: param["name"]);
           if (dataUser["msg"] != null) {
             return Msg.msgResponseError(msg: dataUser);
           }
           return Msg.msgResponseSuccess(msg: dataUser);
         }
-        return Msg.notFound(msg: {"msg": "name, email and Password is reqiurd"});
+        return Msg.notFound(
+            msg: {"msg": "name, email and Password is reqiurd"});
       } catch (error) {
         return Msg.badRequest(msg: {"msg": "bad Request"});
       }
@@ -48,6 +51,23 @@ class AuthAPi {
       }
     });
 
+    router.get("/restPassword", (Request req) async {
+      try {
+        final Map<String, dynamic> param =
+            json.decode(await req.readAsString());
+        if (param.containsKey("email")) {
+          var dataUser =
+              await FirebaseMethod.restPassword(email: param["email"]);
+          if (dataUser["msg"] != null) {
+            return Msg.msgResponseError(msg: dataUser);
+          }
+          return Msg.msgResponseSuccess(msg: dataUser);
+        }
+        return Msg.notFound(msg: {"msg": "email reqiurd"});
+      } catch (error) {
+        return Msg.badRequest(msg: {"msg": "bad Request"});
+      }
+    });
     router.get("/checkAuth", (Request req) async {
       try {
         Map<String, dynamic> param = req.headers;

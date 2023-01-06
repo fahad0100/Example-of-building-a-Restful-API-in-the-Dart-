@@ -9,6 +9,7 @@ import 'package:shelf_router/shelf_router.dart';
 
 import 'Const/const_Msg.dart';
 import 'Const/const_Variable.dart';
+import 'Firebase/firebaseMethod.dart';
 import 'MongoDB/MongoDbMethod.dart';
 import 'Routers/BaseApi.dart';
 
@@ -19,6 +20,7 @@ mongodb+srv://admin123:<password>@cluster0.fca00cj.mongodb.net/?retryWrites=true
 */
 main() async {
   //for get port
+  await FirebaseMethod.restPassword(email: "fahad.alazmi1994@gmail.com");
   func();
   var env = Platform.environment;
   constVsvariable.port = env.entries.firstWhere(
@@ -53,7 +55,6 @@ func() async {
     }
   });
 
-  int count = 0;
   Timer.periodic(Duration(hours: 1), (Timer timer) {
     strem.sink.add("delete");
   });

@@ -20,15 +20,15 @@ import 'package:firebase_admin_sdk/firebase_admin.dart' as admin;
   */
 class FirebaseMethod {
 // for package:firebase_admin_sdk/firebase_admin.dart
-  static dynamic adminFirebase = null;
+  static admin.App? adminFirebase;
 
   // for package:firebase_admin_sdk/firebase_admin.dart
-
   static const _apiKey = "AIzaSyCd9iUrN2ADdnOy48OTVgzblEzozeqazB4";
   static final _fbAuth = restFB.FirebaseAuth(http.Client(), _apiKey);
   static final _testApiToken =
       fd.FirebaseAuthToken(projectId: "apistudents-3f587");
 
+//for create new user on firebase
   static createAccount(
       {required String email, required String pass, required name}) async {
     try {
@@ -46,7 +46,8 @@ class FirebaseMethod {
       };
       await MongoDBClss.addNewUsers(user: UserModel.fromJson(dataUser));
 
-      dataUser["token"] = user.refreshToken.toString();
+      dataUser["token"] = user.idToken.toString();
+      dataUser["refreshToken"] = user.refreshToken.toString();
       dataUser["expiresAt"] = user.expiresAt.toString();
 
       return dataUser;
@@ -58,6 +59,7 @@ class FirebaseMethod {
     }
   }
 
+//for login user on firebase
   static login({required String email, required String pass}) async {
     try {
       restFB.FirebaseAccount user =
@@ -66,6 +68,7 @@ class FirebaseMethod {
       Map<String, dynamic> dataUser = {
         "token": user.idToken.toString(),
         "id": user.localId.toString(),
+        "refreshToken": user.refreshToken.toString(),
         "expiresAt": user.expiresAt.toString()
       };
       return dataUser;
@@ -107,12 +110,28 @@ class FirebaseMethod {
         credential: certificate,
       ));
 
-      var user = await adminFirebase.auth().getUser(idUser.toString());
+      var user = await adminFirebase!.auth().getUser(idUser.toString());
 
-      await adminFirebase.auth().deleteUser(idUser.toString());
+      await adminFirebase!.auth().deleteUser(idUser.toString());
       print("the user have ${user.email} is deleted ...");
     } catch (error) {
       print(error);
+    }
+  }
+
+  static restPassword({required String email}) async {
+    try {
+      await _fbAuth.requestPasswordReset(email);
+      Map<String, dynamic> dataUser = {
+        "rest": "Successfully, Verify your email"
+      };
+      print(dataUser);
+      return dataUser;
+    } on restFB.AuthException catch (error) {
+      Map<String, dynamic> mapRe = {
+        "msg": error.error.message,
+      };
+      return mapRe;
     }
   }
 }
