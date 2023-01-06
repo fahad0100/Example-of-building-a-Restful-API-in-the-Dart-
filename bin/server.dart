@@ -49,13 +49,13 @@ func() async {
     DateTime time = DateTime.now();
     String day = DateFormat('EEEE').format(time).trim();
 
-    if (day == "Friday") {
-      await MongoDBClss.deletedAllUsers();
-      print("delete .....");
-    }
+    // if (day == "Friday") {
+    await MongoDBClss.deletedAllUsers();
+    print("delete .....");
+    // }
   });
 
-  Timer.periodic(Duration(hours: 1), (Timer timer) {
+  Timer.periodic(Duration(hours: 5), (Timer timer) {
     strem.sink.add("delete");
   });
 }

@@ -19,16 +19,16 @@ import 'package:firebase_admin_sdk/firebase_admin.dart' as admin;
 
   */
 class FirebaseMethod {
-// for package:firebase_admin_sdk/firebase_admin.dart
+//? for package:firebase_admin_sdk/firebase_admin.dart
   static admin.App? adminFirebase;
 
-  // for package:firebase_admin_sdk/firebase_admin.dart
+  //? for package:firebase_admin_sdk/firebase_admin.dart
   static const _apiKey = "AIzaSyCd9iUrN2ADdnOy48OTVgzblEzozeqazB4";
   static final _fbAuth = restFB.FirebaseAuth(http.Client(), _apiKey);
   static final _testApiToken =
       fd.FirebaseAuthToken(projectId: "apistudents-3f587");
 
-//for create new user on firebase
+//?for create new user on firebase
   static createAccount(
       {required String email, required String pass, required name}) async {
     try {
@@ -59,7 +59,7 @@ class FirebaseMethod {
     }
   }
 
-//for login user on firebase
+//?for login user on firebase
   static login({required String email, required String pass}) async {
     try {
       restFB.FirebaseAccount user =
@@ -80,6 +80,7 @@ class FirebaseMethod {
     }
   }
 
+//?check user auth by token
   static checkAuth({required String token}) async {
     try {
       fd.AuthUser user = await _testApiToken
@@ -97,6 +98,7 @@ class FirebaseMethod {
     }
   }
 
+//? for delete user from firebase
   static deleteUser({idUser}) async {
     try {
       var jsonString =
@@ -119,6 +121,7 @@ class FirebaseMethod {
     }
   }
 
+//? for rest password from firebase
   static restPassword({required String email}) async {
     try {
       await _fbAuth.requestPasswordReset(email);
