@@ -54,7 +54,7 @@ func() async {
   });
 
   int count = 0;
-  Timer.periodic(Duration(minutes: 30), (Timer timer) {
+  Timer.periodic(Duration(minutes: 5), (Timer timer) {
     strem.sink.add("delete");
   });
 }
