@@ -149,7 +149,7 @@ class UserRouter {
             await MongoDBClss.deletePostUsers(userID: user["id"], postID: id);
         print("--------$posts---------");
         if (posts == true) {
-          return Msg.msgResponseSuccess(msg: {"msg": "post updated"});
+          return Msg.msgResponseSuccess(msg: {"msg": "post deleted"});
         } else {
           return Msg.msgResponseError(
               msg: {"msg": " not found or you don't have authorization"});
