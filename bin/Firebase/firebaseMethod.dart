@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:firebase_auth_rest/firebase_auth_rest.dart' as restFB;
 import 'package:firebase_auth_token/firebase_auth_token.dart' as fd;
 import 'package:http/http.dart' as http;
+import '../Const/const_Variable.dart';
 import '../Models/Users.dart';
 import '../MongoDB/MongoDbMethod.dart';
 import 'package:intl/intl.dart';
@@ -23,10 +24,10 @@ class FirebaseMethod {
   static admin.App? adminFirebase;
 
   //? for package:firebase_admin_sdk/firebase_admin.dart
-  static const _apiKey = "AIzaSyCd9iUrN2ADdnOy48OTVgzblEzozeqazB4";
-  static final _fbAuth = restFB.FirebaseAuth(http.Client(), _apiKey);
+  static final _fbAuth =
+      restFB.FirebaseAuth(http.Client(), ConstVariable.apiKey);
   static final _testApiToken =
-      fd.FirebaseAuthToken(projectId: "apistudents-3f587");
+      fd.FirebaseAuthToken(projectId: ConstVariable.projectId);
 
 //?for create new user on firebase
   static createAccount(
@@ -94,6 +95,7 @@ class FirebaseMethod {
       Map<String, dynamic> mapRe = {
         "msg": error.error.message,
       };
+      print(error);
       return mapRe;
     }
   }

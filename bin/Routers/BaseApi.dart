@@ -5,6 +5,7 @@ import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
 
 import 'Auth/authRouter.dart';
+import 'UserRouters/BaseUser.dart';
 
 class ApiBase {
   Handler get router {
@@ -13,7 +14,7 @@ class ApiBase {
     router.mount("/auth/", AuthAPi().router);
     Handler _handler =
         Pipeline().addMiddleware(logRequests()).addHandler(router);
-
+    router.mount("/user/", UserRouter().router);
     router.all("/", (Request req) {
       return Response.ok("ApiBase");
     });

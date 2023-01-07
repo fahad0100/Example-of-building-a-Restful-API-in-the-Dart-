@@ -23,7 +23,7 @@ main() async {
   await FirebaseMethod.restPassword(email: "fahad.alazmi1994@gmail.com");
   func();
   var env = Platform.environment;
-  constVsvariable.port = env.entries.firstWhere(
+  ConstVariable.port = env.entries.firstWhere(
       (element) => element.key == "PORT",
       orElse: (() => MapEntry("PORT", "8080")));
 
@@ -37,8 +37,8 @@ main() async {
     return Msg.msgResponseError(msg: {"msg": "Page not found"});
   });
 
-  var server = await io.serve(handler, constVsvariable.localAddress,
-      int.parse(constVsvariable.port!.value.toString()));
+  var server = await io.serve(handler, ConstVariable.localAddress,
+      int.parse(ConstVariable.port!.value.toString()));
 
   print("http://${server.address.host}:${server.port}");
 }
