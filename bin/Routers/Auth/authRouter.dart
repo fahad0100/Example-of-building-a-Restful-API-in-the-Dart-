@@ -51,7 +51,7 @@ class AuthAPi {
       }
     });
 
-    router.get("/restPassword", (Request req) async {
+    router.post("/restPassword", (Request req) async {
       try {
         final Map<String, dynamic> param =
             json.decode(await req.readAsString());
