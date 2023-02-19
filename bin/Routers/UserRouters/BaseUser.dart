@@ -1,10 +1,8 @@
 import 'dart:convert';
 
-import 'package:firebase_auth_token/firebase_auth_token.dart';
 import 'package:mongo_dart/mongo_dart.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
-
 import '../../Const/const_Msg.dart';
 import '../../Firebase/firebaseMethod.dart';
 import '../../Models/PostModel.dart';
@@ -35,7 +33,7 @@ class UserRouter {
             })
         .addHandler(router);
 
-    router.post("/NewPost", (Request req) async {
+    router.post("/newpost", (Request req) async {
       try {
         var headers = req.headers["authorization"].toString();
         print(1);
@@ -64,13 +62,13 @@ class UserRouter {
       }
     });
 
-    router.get("/AllPost", (Request req) async {
+    router.get("/allposts", (Request req) async {
       var posts = await MongoDBClss.allPost();
 
       return Msg.msgResponseSuccess(msg: {"data": posts});
     });
 
-    router.get("/MyPost", (Request req) async {
+    router.get("/myposts", (Request req) async {
       try {
         var headers = req.headers["authorization"].toString();
         Map<String, dynamic> user =
@@ -83,7 +81,7 @@ class UserRouter {
       }
     });
 
-    router.get("/MyPost/<id>", (Request req, String id) async {
+    router.get("/mypost/<id>", (Request req, String id) async {
       try {
         var headers = req.headers["authorization"].toString();
         Map<String, dynamic> user =
@@ -100,7 +98,7 @@ class UserRouter {
       }
     });
 
-    router.get("/Post/<id>", (Request req, String id) async {
+    router.get("/post/<id>", (Request req, String id) async {
       try {
         var posts = await MongoDBClss.postID(postID: id);
         if (posts != null) {
@@ -112,7 +110,7 @@ class UserRouter {
             msg: {"msg": "title and content is reqiurd"});
       }
     });
-    router.put("/updatePost/<id>", (Request req, String id) async {
+    router.put("/updatepost/<id>", (Request req, String id) async {
       try {
         var headers = req.headers["authorization"].toString();
         Map<String, dynamic> parms = json.decode(await req.readAsString());
@@ -138,7 +136,7 @@ class UserRouter {
       }
     });
 
-    router.delete("/deletePost/<id>", (Request req, String id) async {
+    router.delete("/deletepost/<id>", (Request req, String id) async {
       try {
         var headers = req.headers["authorization"].toString();
         Map<String, dynamic> user =
@@ -162,3 +160,55 @@ class UserRouter {
     return handler;
   }
 }
+
+
+/*
+write me a professional README.md file for github to implmention dart backend :
+includes it : get,post,put and delete 
+Prerequisites:
+Dart SDK 
+Firebase
+MongoDB Atlas 
+
+Endpoints:
+Get / : Check id server is running.
+Auth:
+POST /api_v1/auth/SignUp: Creates a new user.
+POST /api_v1/auth/SignIn: Login a user.
+GET /api_v1/auth/checkAuth: Check token a user is not expire.
+POST /api_v1/auth/restPassword: rest Password a user.
+User:
+POST /api_v1/user/NewPost : Creates a new Post.
+GET /api_v1/user/AllPost : Retrieves all posts.
+GET /api_v1/user/MyPost : Retrieves all posts of user.
+GET /api_v1/user/Post/<id> : Retrieve any post by id .
+GET /api_v1/user/MyPost/<id> : Retrieve a post of user by id .
+Put /api_v1/user/updatePost/<id> : update a post of user by id .
+Delete /api_v1/user/deletePost/<id> : Delete a post of user by id .
+
+
+The project has been connected to:
+Firebase: to use the Authentication service
+MongoDB: to store data
+
+Set up your Firebase credentials:
+Create a file called firebase.json in the root of the project, and add your Firebase API key and other relevant information.
+
+Running the API:
+dart bin/server.dart
+
+
+Contributing
+We welcome contributions to this project. If you have an idea for an improvement or a bug to report, please open an issue. If you would like to make a change yourself, please follow these steps:
+
+Fork the repository.
+Create a new branch for your changes.
+Make your changes.
+Commit and push your changes to your branch.
+Open a pull request.
+or contact me on email fahad.alazmi1994@gmail.com
+
+Clone the repository: https://github.com/fahad0100/Example-of-building-a-Restful-API-in-the-Dart-.git
+deployment on heroku:https://api-auth-first-test.herokuapp.com/
+
+*/

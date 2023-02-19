@@ -5,5 +5,4 @@ build/
 .git/
 .github/
 .gitignore
-.idea/
 .packages

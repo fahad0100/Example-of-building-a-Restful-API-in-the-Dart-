@@ -20,7 +20,6 @@ mongodb+srv://admin123:<password>@cluster0.fca00cj.mongodb.net/?retryWrites=true
 */
 main() async {
   //for get port
-  await FirebaseMethod.restPassword(email: "fahad.alazmi1994@gmail.com");
   func();
   var env = Platform.environment;
   ConstVariable.port = env.entries.firstWhere(
@@ -30,11 +29,9 @@ main() async {
   final Router router = Router();
   router.mount("/api_v1", ApiBase().router);
   Handler handler = Pipeline().addMiddleware(logRequests()).addHandler(router);
+
   router.all("/", (Request req) {
     return Response.ok("api is running");
-  });
-  router.all("/<name|.*>", (Request req) {
-    return Msg.msgResponseError(msg: {"msg": "Page not found"});
   });
 
   var server = await io.serve(handler, ConstVariable.localAddress,
@@ -49,10 +46,10 @@ func() async {
     DateTime time = DateTime.now();
     String day = DateFormat('EEEE').format(time).trim();
 
-    // if (day == "Friday") {
+    if (day == "Friday") {
     await MongoDBClss.deletedAllUsers();
     print("delete .....");
-    // }
+    }
   });
 
   Timer.periodic(Duration(hours: 5), (Timer timer) {

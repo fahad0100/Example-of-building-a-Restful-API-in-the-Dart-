@@ -103,9 +103,7 @@ class FirebaseMethod {
 //? for delete user from firebase
   static deleteUser({idUser}) async {
     try {
-      var jsonString =
-          File("apistudents-3f587-firebase-adminsdk-hzbpg-67e17f6145.json")
-              .readAsStringSync();
+      var jsonString = File("firebase.json").readAsStringSync();
       final Map<String, dynamic> jsonmap = await json.decode(jsonString);
       var certificate = admin.FirebaseAdmin.instance.certFromMap(jsonmap);
 
